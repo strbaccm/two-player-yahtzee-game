@@ -36,8 +36,13 @@ public class ClientThread extends Thread{
 	public String getUsername() {
 		return username;
 	}
+
+	public void sendMessage(String message) {
+		output.println(message);
+	}
 	
 	public void closeAll() {
+		server.clientDisconnected(this);
 		try {
 			input.close();
 			output.close();

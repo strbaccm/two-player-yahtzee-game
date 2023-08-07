@@ -23,11 +23,8 @@ public class ClientThread extends Thread{
 		catch(IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
-	
-
 	public void run() {
 		
 	}
@@ -51,7 +48,4 @@ public class ClientThread extends Thread{
 			e.printStackTrace();
 		}
 	}
-	
-	
-
 }

@@ -89,9 +89,71 @@ public class ClientApp extends Application{
 				error.setText(" ");
 				
 			});
+
+			rules.setOnAction(e->{
+				VBox rule;
+				try {
+					rule = getRules();
+					Button back= new Button("BACK");
+					back.setAlignment(Pos.BOTTOM_LEFT);
+					back.setFont(Font.font("Ariel",FontWeight.BOLD, 12));
+					
+					VBox b=new VBox();
+					b.getChildren().addAll(rule,back);
+					b.setStyle("-fx-background-color: #A7C7E7; -fx-text-box-border: transparent;");
+					Scene scene3 =new Scene(b, 600,600);
+					primaryStage.setScene(scene3);
+					primaryStage.show();
+					
+					back.setOnAction( e1-> {
+						primaryStage.setScene(scene);
+					});
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			});
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+		private VBox getRules() throws IOException {
+		Label l=new Label("\n YAHTZEE RULES \n\n");
+		//l.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY )));
+		l.setFont(Font.font("Ariel", FontWeight.BOLD, 15));
+		l.setTextFill(Color.BLACK );
+		l.setTextAlignment(TextAlignment.JUSTIFY);
+		l.setAlignment(Pos.TOP_CENTER);
+		
+	
+		TextArea t=new TextArea();
+		t.setEditable(false);
+	        t.setFont(Font.font("Ariel", FontWeight.BOLD, 12));
+	        t.setMinHeight(450); 
+		try {
+			BufferedReader br=new BufferedReader(new FileReader("C:/Users/KORISNIK/Desktop/rules.txt"));
+			StringBuilder sb= new StringBuilder();
+			String line;
+			while((line=br.readLine())!=null) {
+				sb.append(line);
+				sb.append("\n");
+			}
+			
+		 	t.setText(sb.toString());
+			br.close();
+				
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		VBox r=new VBox();
+		r.getChildren().addAll(l,t);
+		r.setAlignment(Pos.CENTER);
+		//r.setStyle("-fx-background-color: #4B5795; -fx-text-box-border: transparent;");
+		return r;
 	}
 	
 	public static void main(String[] args) {

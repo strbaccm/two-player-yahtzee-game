@@ -152,7 +152,6 @@ public class ClientApp extends Application{
 		VBox r=new VBox();
 		r.getChildren().addAll(l,t);
 		r.setAlignment(Pos.CENTER);
-		//r.setStyle("-fx-background-color: #4B5795; -fx-text-box-border: transparent;");
 		return r;
 	}
 	

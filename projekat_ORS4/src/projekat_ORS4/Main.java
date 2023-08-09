@@ -768,7 +768,7 @@ public class Main extends Application {
 			diceImage4 = new ImageView();
 			diceImage5 = new ImageView();
 			
-			File file = new File("src/application/dice1.png");
+			File file = new File("src/pictures/dice1.png");
 			diceImage1.setImage(new Image(file.toURI().toString()));
 			diceImage2.setImage(new Image(file.toURI().toString()));
 			diceImage3.setImage(new Image(file.toURI().toString()));
@@ -899,7 +899,7 @@ public class Main extends Application {
 						        for (int j = 0; j < dices.length; j++) {
 						        	if (!dices[j].isAside()) {
 						        		int number = random.nextInt(6) + 1;
-								        File file = new File("src/application/dice" + number + ".png");
+								        File file = new File("src/pictures/dice" + number + ".png");
 								        dicesImage.get(j).setImage(new Image(file.toURI().toString()));
 						        	}
 						        }
@@ -909,7 +909,7 @@ public class Main extends Application {
 							for (int j = 0; j < dices.length; j++) {
 					        	if (!dices[j].isAside()) {
 					        	int number = dices[j].getNumber();
-						        File file = new File("src/application/dice" + number + ".png");
+						        File file = new File("src/pictures/dice" + number + ".png");
 						        dicesImage.get(j).setImage(new Image(file.toURI().toString()));	
 					        	}
 							}

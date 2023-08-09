@@ -33,7 +33,7 @@ public class ClientApp extends Application{
 			leave.setLayoutY(30);
 			leave.setFont(Font.font("Ariel",FontWeight.BOLD, 13));
 			
-			InputStream stream =new FileInputStream("C:/Users/KORISNIK/Desktop/yahtzee.jpg");
+			InputStream stream =new FileInputStream("src/pictures/yahtzee.jpg");
 			Image image=new Image(stream);
 			ImageView iv=new ImageView();
 			iv.setImage(image);

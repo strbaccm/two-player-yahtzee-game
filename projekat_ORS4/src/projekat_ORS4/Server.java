@@ -15,15 +15,17 @@ public class Server {
 	
 	public Server() throws IOException{
 		serverSocket = new ServerSocket(SERVER_PORT);
-		System.out.println("Server started on port " + SERVER_PORT);
+		System.err.println("Server bound on port " + SERVER_PORT);
 		execute();
 	}
 	
 	public void execute() {
 		while(true) {
+			System.err.println("Listening for clients...");
 			Socket socket = null;
 			try {
 				socket = serverSocket.accept();
+				System.err.println("Client accepted! Dispatching thread...");
 				ClientThread client = new ClientThread(socket, this);
 				client.start();
 				threads.add(client);

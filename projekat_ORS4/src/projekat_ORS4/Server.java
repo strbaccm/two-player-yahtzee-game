@@ -47,6 +47,23 @@ public class Server {
 				thread.sendMessage("You are playing with "+name1);
 		}
 	}
+
+	public void sendToOpponent(String message, Socket client) {
+		for (ArrayList<Socket> list : clients) {
+			if (list.size() == 2 && (client == list.get(0) || client == list.get(1))) {
+				Socket opponent;
+				if (client == list.get(0)) 
+				    opponent = list.get(1);
+				else 
+				    opponent = list.get(0);
+				for (ClientThread thread : threads) {
+					if (thread.getSocket() == opponent)
+						thread.sendMessage(message);
+				}
+				break;
+			}
+		}
+	}
 	
 	public synchronized void addAndPair(Socket socket) {
 		if(!clients.isEmpty() && clients.get(clients.size() - 1).size() == 1) {

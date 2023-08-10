@@ -133,7 +133,7 @@ public class ClientApp extends Application{
 	        t.setFont(Font.font("Ariel", FontWeight.BOLD, 12));
 	        t.setMinHeight(450); 
 		try {
-			BufferedReader br=new BufferedReader(new FileReader("C:/Users/KORISNIK/Desktop/rules.txt"));
+			BufferedReader br=new BufferedReader(new FileReader("src/pictures/rules.txt"));
 			StringBuilder sb= new StringBuilder();
 			String line;
 			while((line=br.readLine())!=null) {

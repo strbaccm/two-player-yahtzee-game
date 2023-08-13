@@ -33,7 +33,7 @@ public class ClientApp extends Application{
 			leave.setLayoutY(30);
 			leave.setFont(Font.font("Ariel",FontWeight.BOLD, 13));
 			
-			InputStream stream =new FileInputStream("src/pictures/yahtzee.jpg");
+			InputStream stream =new FileInputStream("src/addings/yahtzee.jpg");
 			Image image=new Image(stream);
 			ImageView iv=new ImageView();
 			iv.setImage(image);
@@ -133,7 +133,7 @@ public class ClientApp extends Application{
 	        t.setFont(Font.font("Ariel", FontWeight.BOLD, 12));
 	        t.setMinHeight(450); 
 		try {
-			BufferedReader br=new BufferedReader(new FileReader("src/pictures/rules.txt"));
+			BufferedReader br=new BufferedReader(new FileReader("src/addings/rules.txt"));
 			StringBuilder sb= new StringBuilder();
 			String line;
 			while((line=br.readLine())!=null) {

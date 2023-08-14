@@ -26,7 +26,30 @@ public class ClientThread extends Thread{
 	}
 	
 	public void run() {
-		
+		try {
+			String message;
+			while(true) {
+				message = input.readLine();
+				String [] action = message.split(" ");
+				if(action[0].equals("USERNAME")) {
+					username = action[1];
+					server.addAndPair(client);
+				}
+				else if(message.equals("DISCONNECTED")) {
+					server.sendToOpponent(message, client);
+					closeAll();
+				}
+				else if(message.equals("LEFT_GAME")) {
+					server.sendToOpponent("DISCONNECTED", client);
+					server.clientDisconnected(this);
+				}
+				else
+					server.sendToOpponent(message, client);
+			}
+		}
+		catch(IOException e) {
+			closeAll();
+		}
 	}
 	
 	public Socket getSocket() {

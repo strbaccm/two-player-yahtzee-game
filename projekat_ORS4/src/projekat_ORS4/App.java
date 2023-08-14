@@ -1141,7 +1141,7 @@ public class App extends Application{
 	    	chat=new TextFlow();
 	    	chat.setPrefWidth(180);
 	    	chat.setPrefHeight(330);
-	    	chat.setStyle("-fx-background-color: #F0FFFF; -fx-text-box-border: transparent;");
+	    	chat.setStyle("-fx-background-color: #336699; -fx-text-box-border: transparent;");
 	    	chat.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 	    	chat.setPadding(new Insets(10));
 	        

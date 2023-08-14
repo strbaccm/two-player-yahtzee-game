@@ -42,9 +42,9 @@ public class Server {
 		
 		for(ClientThread thread : threads) {
 			if(thread.getSocket() == player1)
-				thread.sendMessage("You are playing with "+name2);
+				thread.sendMessage("START " + name2 + " " +0);
 			else if(thread.getSocket() == player2)
-				thread.sendMessage("You are playing with "+name1);
+				thread.sendMessage("START " + name1 + " " +1);
 		}
 	}
 
@@ -79,8 +79,9 @@ public class Server {
 		}
 	}
 	
-	public synchronized void clientDisconnected(ClientThread client) {
-		threads.remove(client);
+	public synchronized void clientDisconnected(ClientThread client, int action) {
+		if (action == 0)
+			threads.remove(client);
 		int index = -1;
 		for (int i = 0; i < clients.size(); i++) {
 			if (client.getSocket().equals(clients.get(i).get(0))

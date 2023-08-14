@@ -108,6 +108,16 @@ public class App extends Application{
 					return;
 				}
 				error.setText(" ");
+				VBox cet=makeChat();
+				VBox desno=getGame();
+				desno.setStyle("-fx-background-color: #A7C7E7");
+				HBox c=new HBox();
+			     
+				c.getChildren().addAll(desno,cet);
+				c.setStyle("-fx-background-color: #A7C7E7; -fx-text-box-border: transparent;");
+				Scene scene2 =new Scene(c,630,630);
+				primaryStage.setScene(scene2);
+				primaryStage.show();
 				
 			});
 		} catch(Exception e) {

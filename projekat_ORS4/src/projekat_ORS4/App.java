@@ -1129,6 +1129,39 @@ public class App extends Application{
 	    	return root;
 	    	
 	}
+	 private VBox makeChat() {
+	    	Label label=new Label("Chat : ");
+	    	label.setTextFill(Color.BLACK );
+			label.setTextAlignment(TextAlignment.JUSTIFY);
+			label.setAlignment(Pos.TOP_CENTER);
+			label.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
+	    	
+	    	chat=new TextFlow();
+	    	chat.setPrefWidth(180);
+	    	chat.setPrefHeight(330);
+	    	chat.setStyle("-fx-background-color: #F0FFFF; -fx-text-box-border: transparent;");
+	    	chat.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
+	    	chat.setPadding(new Insets(10));
+	        
+	    	
+	    	TextField input =new TextField();
+	    	input.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
+	    	Button send= new Button("SEND");
+	    	send.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
+	    	
+	    	HBox toSend=new HBox(10);
+	    	toSend.setAlignment(Pos.BASELINE_RIGHT);
+	    	toSend.getChildren().addAll(input,send);
+	    	
+	    	Button leave= new Button("LEAVE");
+	    	leave.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
+	   
+	    	
+	    	VBox chatBox=new VBox(10);
+	    	chatBox.getChildren().addAll(leave, label, chat, toSend);
+	    	
+	    	 return chatBox;
+	    }
 	
 	
 	public static void main(String[] args) {

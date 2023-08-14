@@ -41,7 +41,7 @@ public class ClientThread extends Thread{
 				}
 				else if(message.equals("LEFT_GAME")) {
 					server.sendToOpponent("DISCONNECTED", client);
-					server.clientDisconnected(this);
+					server.clientDisconnected(this,1);
 				}
 				else
 					server.sendToOpponent(message, client);
@@ -65,7 +65,7 @@ public class ClientThread extends Thread{
 	}
 	
 	public void closeAll() {
-		server.clientDisconnected(this);
+		server.clientDisconnected(this,0);
 		try {
 			input.close();
 			output.close();

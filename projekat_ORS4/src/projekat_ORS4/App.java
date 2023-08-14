@@ -155,11 +155,11 @@ public class App extends Application{
 		    Label sixes = new Label("Sixes");
 		    sixes.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 		    sixes.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
-		    Label sum = new Label("Sum");
-		    sum.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
+		    Label sum = new Label("SUM");
+		    sum.setFont(Font.font("Ariel", FontWeight.BOLD, 14));
 		    sum.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
-		    Label bonus = new Label("Bonus");
-		    bonus.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
+		    Label bonus = new Label("BONUS");
+		    bonus.setFont(Font.font("Ariel", FontWeight.BOLD, 14));
 		    bonus.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label threeOfAKind = new Label("Three of a kind");
 		    threeOfAKind.setFont(Font.font("Ariel", FontWeight.BOLD, 12));
@@ -182,8 +182,8 @@ public class App extends Application{
 		    Label yahtzee = new Label("Yahtzee");
 		    yahtzee.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 		    yahtzee.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
-		    Label total = new Label("Total");
-		    total.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
+		    Label total = new Label("TOTAL");
+		    total.setFont(Font.font("Ariel", FontWeight.BOLD, 14));
 		    total.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    
 		    scores.add(empty);

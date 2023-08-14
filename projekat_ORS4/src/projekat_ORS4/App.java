@@ -284,6 +284,7 @@ public class App extends Application{
 	        	column1.get(i).setAlignment(Pos.CENTER);
 	        	column1.get(i).setTextFill(Color.DARKBLUE);
 	        	column1.get(i).setStyle("-fx-background-color: #b8e6bf");
+			column1.get(i).setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 	        	column1.get(i).setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    }
 	        
@@ -865,6 +866,7 @@ public class App extends Application{
 	        	column2.get(i).setAlignment(Pos.CENTER);
 	        	column2.get(i).setTextFill(Color.DARKBLUE);
 	        	column2.get(i).setStyle("-fx-background-color: #b8e6bf");
+			column2.get(i).setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 	        	column2.get(i).setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    }
 	        

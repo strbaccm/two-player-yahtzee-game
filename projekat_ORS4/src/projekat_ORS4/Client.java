@@ -36,6 +36,22 @@ public class Client {
 		}
 	}
 
+	public void sendMessage(String message) {
+		output.println("MESSAGE " + username + ": " + message);
+	}
+		
+	public void sendUsername() {
+		output.println("USERNAME " + username);
+	}
+
+	public void sendDisconnected() {
+		output.println("DISCONNECTED");
+	}
+
+	public void sendLeftGame() {
+		output.println("LEFT_GAME");
+	}
+
 
   public void closeResourses() throws IOException {
 		input.close();

@@ -17,7 +17,26 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class App extends Application{
-
+	
+        private TextFlow chat;
+	private String oponentsName;
+	private GridPane grid;
+	Random random = new Random();
+	private ImageView diceImage1;
+	private ImageView diceImage2;
+	private ImageView diceImage3;
+	private ImageView diceImage4;
+	private ImageView diceImage5;
+	private Button rollButton;
+	private Dice dice1;
+	private Dice dice2;
+	private Dice dice3;
+	private Dice dice4;
+	private Dice dice5;
+	private Dice[] dices;
+	private boolean firstRoll = true;
+	private int numberRoll = 0;
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {

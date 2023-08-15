@@ -140,6 +140,33 @@ public class App extends Application{
 				primaryStage.show();
 				
 			});
+
+			rules.setOnAction(e->{
+				VBox rule;
+				try {
+					rule = getRules();
+					Button back= new Button("BACK");
+					back.setAlignment(Pos.BOTTOM_LEFT);
+					back.setFont(Font.font("Ariel",FontWeight.BOLD, 12));
+					
+					VBox b=new VBox();
+					b.getChildren().addAll(rule,back);
+					b.setStyle("-fx-background-color: #A7C7E7; -fx-text-box-border: transparent;");
+					Scene scene3 =new Scene(b, 600,600);
+					primaryStage.setScene(scene3);
+					primaryStage.show();
+					
+					back.setOnAction( e1-> {
+						primaryStage.setScene(scene);
+					});
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			});
+
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

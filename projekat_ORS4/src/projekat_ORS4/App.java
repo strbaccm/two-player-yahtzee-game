@@ -1491,6 +1491,53 @@ public class App extends Application{
 		}
 	    	return root;    	
 	}
+
+	private VBox getRules() throws IOException {
+		Label l=new Label("\n YAHTZEE RULES \n\n");
+		//l.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY )));
+		l.setFont(Font.font("Ariel", FontWeight.BOLD, 15));
+		l.setTextFill(Color.BLACK );
+		l.setTextAlignment(TextAlignment.JUSTIFY);
+		l.setAlignment(Pos.TOP_CENTER);
+		//r.setTextFill(Color.RED);
+	
+		TextArea t=new TextArea();
+		t.setEditable(false);
+	    t.setFont(Font.font("Ariel", FontWeight.BOLD, 12));
+	    t.setMinHeight(450);
+	   
+	   
+	    
+	    
+		try {
+			BufferedReader br=new BufferedReader(new FileReader("src/addings/rules.txt"));
+			StringBuilder sb= new StringBuilder();
+			String line;
+			while((line=br.readLine())!=null) {
+				sb.append(line);
+				sb.append("\n");
+			}
+			
+		 	t.setText(sb.toString());
+			br.close();
+				
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		VBox r=new VBox();
+		r.getChildren().addAll(l,t);
+		r.setAlignment(Pos.CENTER);
+		//r.setStyle("-fx-background-color: #4B5795; -fx-text-box-border: transparent;");
+		return r;
+	}
+	
+
+
+
 	
 	 private VBox makeChat() {
 	    	Label label=new Label("Chat: ");

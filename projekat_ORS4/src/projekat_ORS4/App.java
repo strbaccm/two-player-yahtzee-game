@@ -3,13 +3,17 @@ package projekat_ORS4;
 import javafx.geometry.Insets;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,6 +30,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -55,6 +60,9 @@ public class App extends Application{
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+                        client = new Client(this);
+			client.start();
+			
 			Group start=new Group();
 			Button rules = new Button("RULES");
 			rules.setMaxSize(100, 20);

@@ -89,7 +89,7 @@ public class App extends Application{
 			leave.setLayoutY(30);
 			leave.setFont(Font.font("Ariel",FontWeight.BOLD, 13));
 			
-			InputStream stream =new FileInputStream("src/addings/picture.jpg");
+			InputStream stream =new FileInputStream("src/addings/yahtzee.jpg");
 			Image image=new Image(stream);
 			ImageView iv=new ImageView();
 			iv.setImage(image);

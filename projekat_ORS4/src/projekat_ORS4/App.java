@@ -37,11 +37,14 @@ import javafx.stage.Stage;
 
 public class App extends Application{
 	private Stage stage;
-        private String username;
-	private Client client;
-        private TextFlow chat;
-	private String oponentsName;
+	private TextFlow chat;
+    
 	private GridPane grid;
+	private ArrayList<Label> scores;
+	private ArrayList<Label> players;
+	private ArrayList<Label> column1;
+	private ArrayList<Label> column2;
+	
 	Random random = new Random();
 	private ImageView diceImage1;
 	private ImageView diceImage2;
@@ -58,10 +61,17 @@ public class App extends Application{
 	private boolean firstRoll = true;
 	private int numberRoll = 0;
 	
+	private Client client;
+	private String username;
+	private String oponentsName;
+	private boolean oponentConnected = false;
+	private boolean enemyTurn = false;
+	private boolean end = false;
+	
 	@Override
 	public void start(Stage stage) {
 		try {
-                        client = new Client(this);
+			client = new Client(this);
 			client.start();
 			this.stage=stage;
 			
@@ -79,7 +89,7 @@ public class App extends Application{
 			leave.setLayoutY(30);
 			leave.setFont(Font.font("Ariel",FontWeight.BOLD, 13));
 			
-			InputStream stream =new FileInputStream("C:/Users/KORISNIK/Desktop/yahtzee.jpg");
+			InputStream stream =new FileInputStream("src/addings/picture.jpg");
 			Image image=new Image(stream);
 			ImageView iv=new ImageView();
 			iv.setImage(image);
@@ -132,11 +142,10 @@ public class App extends Application{
 					error.setVisible(true);
 					return;
 				}
-				error.setText(" ");
-				username=userName.getText();
+				error.setText("");
+				username = userName.getText();
 				client.setUsername(userName.getText());
 				client.sendUsername();
-
 				
 				VBox cet=makeChat();
 				VBox desno=getGame();
@@ -150,7 +159,7 @@ public class App extends Application{
 				stage.show();
 				
 			});
-
+			
 			rules.setOnAction(e->{
 				VBox rule;
 				try {
@@ -175,7 +184,6 @@ public class App extends Application{
 				}
 				
 			});
-
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -185,15 +193,14 @@ public class App extends Application{
 	public  VBox getGame() {
 	    	VBox root = null;
 	    	try {
-	    	
-	    	ArrayList<Label> scores = new ArrayList<Label>();
-			ArrayList<Label> players = new ArrayList<Label>();
-			ArrayList<Label> column1 = new ArrayList<Label>();
-			ArrayList<Label> column2 = new ArrayList<Label>();
+	    		
+	    	scores = new ArrayList<Label>();
+			players = new ArrayList<Label>();
+			column1 = new ArrayList<Label>();
+		    column2 = new ArrayList<Label>();
+		    
 			ArrayList<Label> s1 = new ArrayList<Label>();
-			ArrayList<Label> s2 = new ArrayList<Label>();
 			ArrayList<Label> t1 = new ArrayList<Label>();
-			ArrayList<Label> t2 = new ArrayList<Label>();
 			
 			grid = new GridPane();    
 		    grid.setMinSize(400, 300); 
@@ -278,10 +285,10 @@ public class App extends Application{
 		    	scores.get(i).setStyle("-fx-background-color: #0000FF");
 		    }
 		    
-		    Label player1 = new Label("Player1");
+		    Label player1 = new Label(username);
 		    player1.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 		    player1.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
-		    Label player2 = new Label("Player2");
+		    Label player2 = new Label(oponentsName);
 		    player2.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 		    player2.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    
@@ -294,7 +301,7 @@ public class App extends Application{
 		    	players.get(i).setTextFill(Color.BLACK);
 		    	players.get(i).setStyle("-fx-background-color: #0000FF");
 		    }
-		    
+		    		    
 	        Label ones1 = new Label("");
 	        Label twos1 = new Label("");
 	        Label threes1 = new Label("");
@@ -351,11 +358,14 @@ public class App extends Application{
 	        	column1.get(i).setAlignment(Pos.CENTER);
 	        	column1.get(i).setTextFill(Color.DARKBLUE);
 	        	column1.get(i).setStyle("-fx-background-color: #b8e6bf");
-			column1.get(i).setFont(Font.font("Ariel", FontWeight.BOLD, 13));
+			    column1.get(i).setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 	        	column1.get(i).setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    }
 	        
 	        ones1.setOnMouseClicked(e -> {
+	        	if (enemyTurn)
+					return;
+	        	
 	        	if (!ones1.getText().equals("") && (ones1.getTextFill() == Color.RED || ones1.getTextFill() == Color.GRAY)) {
 	        		ones1.setTextFill(Color.BLACK);
 	        		
@@ -397,10 +407,32 @@ public class App extends Application{
 	        		
 	        		if (!total1.getText().equals("")) 
 	        			rollButton.setDisable(true);
-	        	}
+	        		
+	        		enemyTurn = true;
+	        		String message = "";
+	        		for (int i = 0; i < column1.size(); i++) {
+	        			if (!column1.get(i).getText().equals(""))
+	        				message += column1.get(i).getText();
+	        			else
+	        				message += "x";
+	        			message += " ";
+	        		}
+	        		message = message.substring(0, message.length() - 1);
+	        		client.sendSelect(message);
+	        		
+	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
+	    				end = true;
+	    				refresh();
+	    				return;
+	    			}
+	    			refresh();
+	        	}	
 	        });
 	        
 	        twos1.setOnMouseClicked(e -> {
+	        	if (enemyTurn)
+					return;
+	        	
 	        	if (!twos1.getText().equals("") && (twos1.getTextFill() == Color.RED || twos1.getTextFill() == Color.GRAY)) {
 	        		twos1.setTextFill(Color.BLACK);
 	        		
@@ -442,10 +474,32 @@ public class App extends Application{
 	        		
 	        		if (!total1.getText().equals("")) 
 	        			rollButton.setDisable(true);
+
+	        		enemyTurn = true;
+	        		String message = "";
+	        		for (int i = 0; i < column1.size(); i++) {
+	        			if (!column1.get(i).getText().equals(""))
+	        				message += column1.get(i).getText();
+	        			else
+	        				message += "x";
+	        			message += " ";
+	        		}
+	        		message = message.substring(0, message.length() - 2);
+	        		client.sendSelect(message);
+	        		
+	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
+	    				end = true;
+	    				refresh();
+	    				return;
+	    			}
+	    			refresh();
 	        	}
 	        });
 	        
 	        threes1.setOnMouseClicked(e -> {
+	        	if (enemyTurn)
+					return;
+	        	
 	        	if (!threes1.getText().equals("") && (threes1.getTextFill() == Color.RED || threes1.getTextFill() == Color.GRAY)) {
 	        		threes1.setTextFill(Color.BLACK);
 	        		
@@ -487,10 +541,32 @@ public class App extends Application{
 	        		
 	        		if (!total1.getText().equals("")) 
 	        			rollButton.setDisable(true);
+
+	        		enemyTurn = true;
+	        		String message = "";
+	        		for (int i = 0; i < column1.size(); i++) {
+	        			if (!column1.get(i).getText().equals(""))
+	        				message += column1.get(i).getText();
+	        			else
+	        				message += "x";
+	        			message += " ";
+	        		}
+	        		message = message.substring(0, message.length() - 2);
+	        		client.sendSelect(message);
+	        		
+	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
+	    				end = true;
+	    				refresh();
+	    				return;
+	    			}
+	    			refresh();
 	        	}
 	        });
 	        
 	        fours1.setOnMouseClicked(e -> {
+	        	if (enemyTurn)
+					return;
+	        	
 	        	if (!fours1.getText().equals("") && (fours1.getTextFill() == Color.RED || fours1.getTextFill() == Color.GRAY)) {
 	        		fours1.setTextFill(Color.BLACK);
 	        		
@@ -532,10 +608,32 @@ public class App extends Application{
 	        		
 	        		if (!total1.getText().equals("")) 
 	        			rollButton.setDisable(true);
+
+	        		enemyTurn = true;
+	        		String message = "";
+	        		for (int i = 0; i < column1.size(); i++) {
+	        			if (!column1.get(i).getText().equals(""))
+	        				message += column1.get(i).getText();
+	        			else
+	        				message += "x";
+	        			message += " ";
+	        		}
+	        		message = message.substring(0, message.length() - 2);
+	        		client.sendSelect(message);
+	        		
+	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
+	    				end = true;
+	    				refresh();
+	    				return;
+	    			}
+	    			refresh();
 	        	}
 	        });
 	        
 	        fives1.setOnMouseClicked(e -> {
+	        	if (enemyTurn)
+					return;
+	        	
 	        	if (!fives1.getText().equals("") && (fives1.getTextFill() == Color.RED || fives1.getTextFill() == Color.GRAY)) {
 	        		fives1.setTextFill(Color.BLACK);
 	        		
@@ -577,10 +675,32 @@ public class App extends Application{
 	        		
 	        		if (!total1.getText().equals("")) 
 	        			rollButton.setDisable(true);
+
+	        		enemyTurn = true;
+	        		String message = "";
+	        		for (int i = 0; i < column1.size(); i++) {
+	        			if (!column1.get(i).getText().equals(""))
+	        				message += column1.get(i).getText();
+	        			else
+	        				message += "x";
+	        			message += " ";
+	        		}
+	        		message = message.substring(0, message.length() - 2);
+	        		client.sendSelect(message);
+	        		
+	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
+	    				end = true;
+	    				refresh();
+	    				return;
+	    			}
+	    			refresh();
 	        	}
 	        });
 	        
 	        sixes1.setOnMouseClicked(e -> {
+	        	if (enemyTurn)
+					return;
+	        	
 	        	if (!sixes1.getText().equals("") && (sixes1.getTextFill() == Color.RED || sixes1.getTextFill() == Color.GRAY)) {
 	        		sixes1.setTextFill(Color.BLACK);
 	        		
@@ -622,10 +742,32 @@ public class App extends Application{
 	        		
 	        		if (!total1.getText().equals("")) 
 	        			rollButton.setDisable(true);
+
+	        		enemyTurn = true;
+	        		String message = "";
+	        		for (int i = 0; i < column1.size(); i++) {
+	        			if (!column1.get(i).getText().equals(""))
+	        				message += column1.get(i).getText();
+	        			else
+	        				message += "x";
+	        			message += " ";
+	        		}
+	        		message = message.substring(0, message.length() - 2);
+	        		client.sendSelect(message);
+	        		
+	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
+	    				end = true;
+	    				refresh();
+	    				return;
+	    			}
+	    			refresh();
 	        	}
 	        });
 	        
 	        threeOfAKind1.setOnMouseClicked(e -> {
+	        	if (enemyTurn)
+					return;
+	        	
 	        	if (!threeOfAKind1.getText().equals("") && (threeOfAKind1.getTextFill() == Color.RED || threeOfAKind1.getTextFill() == Color.GRAY)) {
 	        		threeOfAKind1.setTextFill(Color.BLACK);
 	        		
@@ -658,10 +800,32 @@ public class App extends Application{
 	        		
 	        		if (!total1.getText().equals("")) 
 	        			rollButton.setDisable(true);
+
+	        		enemyTurn = true;
+	        		String message = "";
+	        		for (int i = 0; i < column1.size(); i++) {
+	        			if (!column1.get(i).getText().equals(""))
+	        				message += column1.get(i).getText();
+	        			else
+	        				message += "x";
+	        			message += " ";
+	        		}
+	        		message = message.substring(0, message.length() - 2);
+	        		client.sendSelect(message);
+	        		
+	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
+	    				end = true;
+	    				refresh();
+	    				return;
+	    			}
+	    			refresh();
 	        	}
 	        });
 	        
 	        fourOfAKind1.setOnMouseClicked(e -> {
+	        	if (enemyTurn)
+					return;
+	        	
 	        	if (!fourOfAKind1.getText().equals("") && (fourOfAKind1.getTextFill() == Color.RED || fourOfAKind1.getTextFill() == Color.GRAY)) {
 	        		fourOfAKind1.setTextFill(Color.BLACK);
 	        		
@@ -694,10 +858,32 @@ public class App extends Application{
 	        		
 	        		if (!total1.getText().equals("")) 
 	        			rollButton.setDisable(true);
+
+	        		enemyTurn = true;
+	        		String message = "";
+	        		for (int i = 0; i < column1.size(); i++) {
+	        			if (!column1.get(i).getText().equals(""))
+	        				message += column1.get(i).getText();
+	        			else
+	        				message += "x";
+	        			message += " ";
+	        		}
+	        		message = message.substring(0, message.length() - 2);
+	        		client.sendSelect(message);
+	        		
+	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
+	    				end = true;
+	    				refresh();
+	    				return;
+	    			}
+	    			refresh();
 	        	}
 	        });
 	        
 	        fullHouse1.setOnMouseClicked(e -> {
+	        	if (enemyTurn)
+					return;
+	        	
 	        	if (!fullHouse1.getText().equals("") && (fullHouse1.getTextFill() == Color.RED || fullHouse1.getTextFill() == Color.GRAY)) {
 	        		fullHouse1.setTextFill(Color.BLACK);
 	        		
@@ -730,10 +916,32 @@ public class App extends Application{
 	        		
 	        		if (!total1.getText().equals("")) 
 	        			rollButton.setDisable(true);
+
+	        		enemyTurn = true;
+	        		String message = "";
+	        		for (int i = 0; i < column1.size(); i++) {
+	        			if (!column1.get(i).getText().equals(""))
+	        				message += column1.get(i).getText();
+	        			else
+	        				message += "x";
+	        			message += " ";
+	        		}
+	        		message = message.substring(0, message.length() - 2);
+	        		client.sendSelect(message);
+	        		
+	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
+	    				end = true;
+	    				refresh();
+	    				return;
+	    			}
+	    			refresh();
 	        	}
 	        });
 	        
 	        smallStraight1.setOnMouseClicked(e -> {
+	        	if (enemyTurn)
+					return;
+	        	
 	        	if (!smallStraight1.getText().equals("") && (smallStraight1.getTextFill() == Color.RED || smallStraight1.getTextFill() == Color.GRAY)) {
 	        		smallStraight1.setTextFill(Color.BLACK);
 	        		
@@ -766,10 +974,32 @@ public class App extends Application{
 	        		
 	        		if (!total1.getText().equals("")) 
 	        			rollButton.setDisable(true);
+
+	        		enemyTurn = true;
+	        		String message = "";
+	        		for (int i = 0; i < column1.size(); i++) {
+	        			if (!column1.get(i).getText().equals(""))
+	        				message += column1.get(i).getText();
+	        			else
+	        				message += "x";
+	        			message += " ";
+	        		}
+	        		message = message.substring(0, message.length() - 2);
+	        		client.sendSelect(message);
+	        		
+	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
+	    				end = true;
+	    				refresh();
+	    				return;
+	    			}
+	    			refresh();
 	        	}
 	        });
 	        
 	        largeStraight1.setOnMouseClicked(e -> {
+	        	if (enemyTurn)
+					return;
+	        	
 	        	if (!largeStraight1.getText().equals("") && (largeStraight1.getTextFill() == Color.RED || largeStraight1.getTextFill() == Color.GRAY)) {
 	        		largeStraight1.setTextFill(Color.BLACK);
 	        		
@@ -802,10 +1032,32 @@ public class App extends Application{
 	        		
 	        		if (!total1.getText().equals("")) 
 	        			rollButton.setDisable(true);
+
+	        		enemyTurn = true;
+	        		String message = "";
+	        		for (int i = 0; i < column1.size(); i++) {
+	        			if (!column1.get(i).getText().equals(""))
+	        				message += column1.get(i).getText();
+	        			else
+	        				message += "x";
+	        			message += " ";
+	        		}
+	        		message = message.substring(0, message.length() - 2);
+	        		client.sendSelect(message);
+	        		
+	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
+	    				end = true;
+	    				refresh();
+	    				return;
+	    			}
+	    			refresh();
 	        	}
 	        });
 	        
 	        chance1.setOnMouseClicked(e -> {
+	        	if (enemyTurn)
+					return;
+	        	
 	        	if (!chance1.getText().equals("") && (chance1.getTextFill() == Color.RED || chance1.getTextFill() == Color.GRAY)) {
 	        		chance1.setTextFill(Color.BLACK);
 	        		
@@ -838,10 +1090,32 @@ public class App extends Application{
 	        		
 	        		if (!total1.getText().equals("")) 
 	        			rollButton.setDisable(true);
+
+	        		enemyTurn = true;
+	        		String message = "";
+	        		for (int i = 0; i < column1.size(); i++) {
+	        			if (!column1.get(i).getText().equals(""))
+	        				message += column1.get(i).getText();
+	        			else
+	        				message += "x";
+	        			message += " ";
+	        		}
+	        		message = message.substring(0, message.length() - 2);
+	        		client.sendSelect(message);
+	        		
+	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
+	    				end = true;
+	    				refresh();
+	    				return;
+	    			}
+	    			refresh();
 	        	}
 	        });
 	        
 	        yahtzee1.setOnMouseClicked(e -> {
+	        	if (enemyTurn)
+					return;
+	        	
 	        	if (!yahtzee1.getText().equals("") && (yahtzee1.getTextFill() == Color.RED || yahtzee1.getTextFill() == Color.GRAY)) {
 	        		yahtzee1.setTextFill(Color.BLACK);
 	        		
@@ -874,6 +1148,25 @@ public class App extends Application{
 	        		
 	        		if (!total1.getText().equals("")) 
 	        			rollButton.setDisable(true);
+
+	        		enemyTurn = true;
+	        		String message = "";
+	        		for (int i = 0; i < column1.size(); i++) {
+	        			if (!column1.get(i).getText().equals(""))
+	        				message += column1.get(i).getText();
+	        			else
+	        				message += "x";
+	        			message += " ";
+	        		}
+	        		message = message.substring(0, message.length() - 2);
+	        		client.sendSelect(message);
+	        		
+	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
+	    				end = true;
+	    				refresh();
+	    				return;
+	    			}
+	    			refresh();
 	        	}
 	        });
 	          
@@ -911,29 +1204,12 @@ public class App extends Application{
 	        column2.add(yahtzee2);
 	        column2.add(total2);
 	        
-	        s2.add(ones1);
-	        s2.add(twos1);
-	        s2.add(threes1);
-	        s2.add(fours1);
-	        s2.add(fives1);
-	        s2.add(sixes1);
-	        
-	        t2.add(sum1);
-	        t2.add(bonus1);
-	        t2.add(threeOfAKind1);
-	        t2.add(fourOfAKind1);
-	        t2.add(fullHouse1);
-	        t2.add(smallStraight1);
-	        t2.add(largeStraight1);
-	        t2.add(chance1);
-	        t2.add(yahtzee1);
-	        
 	        for (int i = 0; i < column2.size(); i++) {
 	        	column2.get(i).setPrefSize(90, 25);
 	        	column2.get(i).setAlignment(Pos.CENTER);
 	        	column2.get(i).setTextFill(Color.DARKBLUE);
 	        	column2.get(i).setStyle("-fx-background-color: #b8e6bf");
-			column2.get(i).setFont(Font.font("Ariel", FontWeight.BOLD, 13));
+			    column2.get(i).setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 	        	column2.get(i).setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    }
 	        
@@ -955,7 +1231,7 @@ public class App extends Application{
 			diceImage4 = new ImageView();
 			diceImage5 = new ImageView();
 			
-			File file = new File("src/application/dice1.png");
+			File file = new File("src/addings/dice1.png");
 			diceImage1.setImage(new Image(file.toURI().toString()));
 			diceImage2.setImage(new Image(file.toURI().toString()));
 			diceImage3.setImage(new Image(file.toURI().toString()));
@@ -1010,6 +1286,9 @@ public class App extends Application{
 	        borderGlow.setSpread(0.8);
 	        
 			diceImage1.setOnMouseClicked(e -> {
+				if (enemyTurn)
+					return;
+				
 				if (!dice1.isAside() && firstRoll == false && numberRoll < 3) {
 					 dice1.setAside(true);
 					 diceImage1.setEffect(borderGlow);
@@ -1021,6 +1300,9 @@ public class App extends Application{
 			});
 			
 			diceImage2.setOnMouseClicked(e -> {
+				if (enemyTurn)
+					return;
+				
 				if (!dice2.isAside() && firstRoll == false && numberRoll < 3) {
 					 dice2.setAside(true);
 					 diceImage2.setEffect(borderGlow);
@@ -1032,6 +1314,9 @@ public class App extends Application{
 			});
 			
 			diceImage3.setOnMouseClicked(e -> {
+				if (enemyTurn)
+					return;
+				
 				if (!dice3.isAside() && firstRoll == false && numberRoll < 3) {
 					dice3.setAside(true);
 					diceImage3.setEffect(borderGlow);
@@ -1043,6 +1328,9 @@ public class App extends Application{
 			});
 			
 			diceImage4.setOnMouseClicked(e -> {
+				if (enemyTurn)
+					return;
+				
 				if (!dice4.isAside() && firstRoll == false && numberRoll < 3) {
 					dice4.setAside(true);
 				    diceImage4.setEffect(borderGlow);
@@ -1054,6 +1342,9 @@ public class App extends Application{
 			});
 			
 			diceImage5.setOnMouseClicked(e -> {
+				if (enemyTurn)
+					return;
+				
 				if (!dice5.isAside() && firstRoll == false && numberRoll < 3) {
 					dice5.setAside(true);
 					diceImage5.setEffect(borderGlow);
@@ -1073,6 +1364,9 @@ public class App extends Application{
 			rollButton.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 			
 			rollButton.setOnAction (e -> {
+				if (enemyTurn)
+					return;
+				
 				if (numberRoll < 3) {
 				for (int i = 0; i < column1.size(); i++)
 					if (column1.get(i).getTextFill() == Color.RED || column1.get(i).getTextFill() == Color.GRAY)
@@ -1088,7 +1382,7 @@ public class App extends Application{
 						        for (int j = 0; j < dices.length; j++) {
 						        	if (!dices[j].isAside()) {
 						        		int number = random.nextInt(6) + 1;
-								        File file = new File("src/application/dice" + number + ".png");
+								        File file = new File("src/addings/dice" + number + ".png");
 								        dicesImage.get(j).setImage(new Image(file.toURI().toString()));
 						        	}
 						        }
@@ -1098,7 +1392,7 @@ public class App extends Application{
 							for (int j = 0; j < dices.length; j++) {
 					        	if (!dices[j].isAside()) {
 					        	int number = dices[j].getNumber();
-						        File file = new File("src/application/dice" + number + ".png");
+						        File file = new File("src/addings/dice" + number + ".png");
 						        dicesImage.get(j).setImage(new Image(file.toURI().toString()));	
 					        	}
 							}
@@ -1195,11 +1489,11 @@ public class App extends Application{
 		         } catch(Exception e5) {
 			e5.printStackTrace();
 		}
-	    	return root;
-	    	
+	    	return root;    	
 	}
+	
 	 private VBox makeChat() {
-	    	Label label=new Label("Chat : ");
+	    	Label label=new Label("Chat: ");
 	    	label.setTextFill(Color.BLACK );
 			label.setTextAlignment(TextAlignment.JUSTIFY);
 			label.setAlignment(Pos.TOP_CENTER);
@@ -1229,9 +1523,10 @@ public class App extends Application{
 	    	VBox chatBox=new VBox(10);
 	    	chatBox.getChildren().addAll(leave, label, chat, toSend);
 	    	
-	    	 return chatBox;
+	    	return chatBox;
 	    }
-	public void addMessageToChat(String message) {            //*****
+	 
+	 public void addMessageToChat(String message) {            //*****
 	    	if(message.split(":").length >=2) {
 	    		Text name=new Text(oponentsName+":");
 	    		Text messageText=new Text(message.split(":")[1]+ "\n");
@@ -1239,9 +1534,62 @@ public class App extends Application{
 	    	    list.addAll(name, messageText);
 	    	}
 	    }
+	 
+	 public void refresh() {  
+		 
+		}
+	 
+	 public void reset() {  
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					
+					refresh();
+				}
+			});
+		}
+	 
+	 public void select(String select) {
+		    enemyTurn = false;
+		    String[] scores = select.split(" ");
+			for (int i = 0; i < column2.size(); i++)
+				if (!scores[i].equals("x"))
+					column2.get(i).setText(scores[i]);
+				else
+					column2.get(i).setText("");
+			if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
+				end = true;
+				refresh();
+				return;
+			}
+			refresh();
+		}
+	 
+	 public void setOponentName(String name) {
+			oponentsName = name;
+		}
+	 
+	 public void setOponentConnected() {
+			oponentConnected = true;
+			refresh();
+		}
+	 
+	 public void disconnectedOponent() {
+		    oponentConnected = false;
+		    enemyTurn = true;
+		    end = false;
+		}
+	 
+	 public void setEnemyTurn(boolean turn) {
+			enemyTurn = turn;
+		}
+	 
+	 public void stop() throws IOException {
+			client.sendDisconnected();
+			client.closeResourses();
+		}
 	
-	public static void main(String[] args) {
-		launch(args);
-	}
-
+	 public static void main(String[] args) {
+		    launch(args);
+	    }
 }

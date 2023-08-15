@@ -36,6 +36,7 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 public class App extends Application{
+	private Stage stage;
         private String username;
 	private Client client;
         private TextFlow chat;
@@ -58,10 +59,11 @@ public class App extends Application{
 	private int numberRoll = 0;
 	
 	@Override
-	public void start(Stage primaryStage) {
+	public void start(Stage stage) {
 		try {
                         client = new Client(this);
 			client.start();
+			this.stage=stage;
 			
 			Group start=new Group();
 			Button rules = new Button("RULES");
@@ -118,11 +120,11 @@ public class App extends Application{
 			start.getChildren().addAll(iv,rules, leave, label1, userName, play,error);
 			
 			Scene scene = new Scene(start,600,600);
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("YAHTZEE"); 
-			primaryStage.setResizable(false);
-			primaryStage.centerOnScreen();
-			primaryStage.show();
+			stage.setScene(scene);
+			stage.setTitle("YAHTZEE"); 
+			stage.setResizable(false);
+			stage.centerOnScreen();
+			stage.show();
 			
 			
 			play.setOnAction(e-> {
@@ -144,8 +146,8 @@ public class App extends Application{
 				c.getChildren().addAll(desno,cet);
 				c.setStyle("-fx-background-color: #A7C7E7; -fx-text-box-border: transparent;");
 				Scene scene2 =new Scene(c,630,630);
-				primaryStage.setScene(scene2);
-				primaryStage.show();
+				stage.setScene(scene2);
+				stage.show();
 				
 			});
 
@@ -161,11 +163,11 @@ public class App extends Application{
 					b.getChildren().addAll(rule,back);
 					b.setStyle("-fx-background-color: #A7C7E7; -fx-text-box-border: transparent;");
 					Scene scene3 =new Scene(b, 600,600);
-					primaryStage.setScene(scene3);
-					primaryStage.show();
+					stage.setScene(scene3);
+					stage.show();
 					
 					back.setOnAction( e1-> {
-						primaryStage.setScene(scene);
+						stage.setScene(scene);
 					});
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block

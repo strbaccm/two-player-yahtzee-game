@@ -1188,7 +1188,14 @@ public class App extends Application{
 	    	
 	    	 return chatBox;
 	    }
-	
+	public void addMessageToChat(String message) {            //*****
+	    	if(message.split(":").length >=2) {
+	    		Text name=new Text(oponentsName+":");
+	    		Text messageText=new Text(message.split(":")[1]+ "\n");
+	    		ObservableList<Node> list = chat.getChildren();
+	    	    list.addAll(name, messageText);
+	    	}
+	    }
 	
 	public static void main(String[] args) {
 		launch(args);

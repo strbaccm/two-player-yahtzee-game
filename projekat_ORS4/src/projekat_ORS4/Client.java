@@ -13,7 +13,7 @@ import javafx.application.Platform;
 
 public class Client extends Thread{
 	
-	private static int SERVER_PORT=12345;  //***
+	private static int SERVER_PORT=9999;  //***
 	private Socket socket;
 	private String username;
 	private BufferedReader input;

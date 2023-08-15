@@ -18,9 +18,9 @@ public class Client extends Thread{
 	private String username;
 	private BufferedReader input;
 	private PrintWriter output;
-	private ClientApp app;
+	private App app;
 	
-	public Client(ClientApp app) {
+	public Client(App app) {
 		this.app=app;
 		try {
 			InetAddress address= InetAddress.getByName("localhost");

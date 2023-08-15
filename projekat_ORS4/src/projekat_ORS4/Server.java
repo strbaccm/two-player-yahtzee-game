@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 
 public class Server {
-	private int SERVER_PORT;
+	private int SERVER_PORT = 9999;
 	private ServerSocket serverSocket = null;
 	//upareni igraci, lista liste koja se sastoji od dva igraca
 	private ArrayList<ArrayList<Socket>> clients = new ArrayList<ArrayList<Socket>>();
@@ -100,5 +100,9 @@ public class Server {
 				return thread.getUsername();
 		}
 		return "";
+	}
+
+	public static void main(String[] args) throws IOException {
+		new Server();
 	}
 }

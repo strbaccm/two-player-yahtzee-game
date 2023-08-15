@@ -31,7 +31,8 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 public class App extends Application{
-	
+        private String username;
+	private Client client;
         private TextFlow chat;
 	private String oponentsName;
 	private GridPane grid;
@@ -122,6 +123,11 @@ public class App extends Application{
 					return;
 				}
 				error.setText(" ");
+				username=userName.getText();
+				client.setUsername(userName.getText());
+				client.sendUsername();
+
+				
 				VBox cet=makeChat();
 				VBox desno=getGame();
 				desno.setStyle("-fx-background-color: #A7C7E7");

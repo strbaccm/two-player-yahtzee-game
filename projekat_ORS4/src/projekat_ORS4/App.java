@@ -3,10 +3,13 @@ package projekat_ORS4;
 import javafx.geometry.Insets;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.FileReader;
+import java.io.BufferedReader;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -34,6 +37,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import javafx.scene.control.TextArea;
 
 public class App extends Application{
 	private Stage stage;

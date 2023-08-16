@@ -1368,7 +1368,7 @@ public class App extends Application{
 			rollButton.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 			
 			rollButton.setOnAction (e -> {
-				if (enemyTurn)
+				if (enemyTurn || !oponentConnected)
 					return;
 				
 				if (numberRoll < 3) {

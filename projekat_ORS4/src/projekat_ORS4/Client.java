@@ -126,7 +126,7 @@ public class Client extends Thread{
 		output.println("LEFT_GAME");
 	}
 	public void sendSelect(String select) {
-		output.println("SELECT"+ select);
+		output.println("SELECT "+ select);
 	}
 	public void setUsername(String name) {
 		username=name;
@@ -135,7 +135,7 @@ public class Client extends Thread{
 		return username;
 	}
 	public void sendConfirmation(String value) {  
-		output.println("CONFIRMATION" + value);
+		output.println("CONFIRMATION " + value);
 	}
 	public void closeResourses() throws IOException {
 		input.close();

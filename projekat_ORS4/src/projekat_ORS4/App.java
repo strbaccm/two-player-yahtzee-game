@@ -1,25 +1,26 @@
-package projekat_ORS4;
+package application;
 
-import javafx.geometry.Insets;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
-import java.io.FileReader;
-import java.io.BufferedReader;
 
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -37,11 +38,11 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
-import javafx.scene.control.TextArea;
 
 public class App extends Application{
 	private Stage stage;
 	private TextFlow chat;
+	private Label turn;
     
 	private GridPane grid;
 	private ArrayList<Label> scores;
@@ -153,11 +154,11 @@ public class App extends Application{
 				
 				VBox cet=makeChat();
 				VBox desno=getGame();
-				desno.setStyle("-fx-background-color: #A7C7E7");
+				desno.setStyle("-fx-background-color: #094152");
 				HBox c=new HBox();
 			     
 				c.getChildren().addAll(desno,cet);
-				c.setStyle("-fx-background-color: #A7C7E7; -fx-text-box-border: transparent;");
+				c.setStyle("-fx-background-color: #094152; -fx-text-box-border: transparent;");
 				Scene scene2 =new Scene(c,630,630);
 				stage.setScene(scene2);
 				stage.show();
@@ -208,7 +209,7 @@ public class App extends Application{
 			
 			grid = new GridPane();    
 		    grid.setMinSize(400, 300); 
-		    grid.setStyle("-fx-background-color: #A7C7E7 ");
+		    grid.setStyle("-fx-background-color: #094152"); 
 		    grid.setAlignment(Pos.CENTER);
 		    grid.setPadding(new Insets(10, 10, 10, 10)); 
 		    grid.setVgap(5); 
@@ -216,53 +217,21 @@ public class App extends Application{
 		
 		    Label empty = new Label("");
 		    Label ones = new Label("Ones");
-		    ones.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-		    ones.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label twos = new Label("Twos");
-		    twos.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-		    twos.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label threes = new Label("Threes");
-		    threes.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-		    threes.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label fours = new Label("Fours");
-		    fours.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-		    fours.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label fives = new Label("Fives");
-		    fives.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-		    fives.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label sixes = new Label("Sixes");
-		    sixes.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-		    sixes.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label sum = new Label("SUM");
-		    sum.setFont(Font.font("Ariel", FontWeight.BOLD, 14));
-		    sum.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label bonus = new Label("BONUS");
-		    bonus.setFont(Font.font("Ariel", FontWeight.BOLD, 14));
-		    bonus.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label threeOfAKind = new Label("Three of a kind");
-		    threeOfAKind.setFont(Font.font("Ariel", FontWeight.BOLD, 12));
-		    threeOfAKind.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label fourOfAKind = new Label("Four of a kind");
-		    fourOfAKind.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-		    fourOfAKind.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label fullHouse = new Label("Full house");
-		    fullHouse.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-		    fullHouse.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label smallStraight = new Label("Small straight");
-		    smallStraight.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-		    smallStraight.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label largeStraight = new Label("Large straight");
-		    largeStraight.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-		    largeStraight.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label chance = new Label("Chance");
-		    chance.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-		    chance.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label yahtzee = new Label("Yahtzee");
-		    yahtzee.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-		    yahtzee.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label total = new Label("TOTAL");
-		    total.setFont(Font.font("Ariel", FontWeight.BOLD, 14));
-		    total.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    
 		    scores.add(empty);
 		    scores.add(ones);
@@ -283,27 +252,25 @@ public class App extends Application{
 		    scores.add(total);
 		    
 		    for (int i = 0; i < scores.size(); i++) {
-		    	scores.get(i).setPrefSize(90, 25);
+		    	scores.get(i).setPrefSize(95, 25);
 		    	scores.get(i).setAlignment(Pos.CENTER);
 		    	scores.get(i).setTextFill(Color.BLACK);
-		    	scores.get(i).setStyle("-fx-background-color: #0000FF");
+		    	scores.get(i).setStyle("-fx-background-color: #70a0af");
+		    	scores.get(i).setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 		    }
 		    
 		    Label player1 = new Label(username);
-		    player1.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-		    player1.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    Label player2 = new Label(oponentsName);
-		    player2.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-		    player2.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    
 		    players.add(player1);
 		    players.add(player2);
 		    
 		    for (int i = 0; i < players.size(); i++) {
-		    	players.get(i).setPrefSize(90, 25);
+		    	players.get(i).setPrefSize(95, 25);
 		    	players.get(i).setAlignment(Pos.CENTER);
 		    	players.get(i).setTextFill(Color.BLACK);
-		    	players.get(i).setStyle("-fx-background-color: #0000FF");
+		    	players.get(i).setStyle("-fx-background-color: #70a0af");
+		    	players.get(i).setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 		    }
 		    		    
 	        Label ones1 = new Label("");
@@ -358,12 +325,11 @@ public class App extends Application{
 	        t1.add(yahtzee1);
 	        
 	        for (int i = 0; i < column1.size(); i++) {
-	        	column1.get(i).setPrefSize(90, 25);
+	        	column1.get(i).setPrefSize(95, 25);
 	        	column1.get(i).setAlignment(Pos.CENTER);
-	        	column1.get(i).setTextFill(Color.DARKBLUE);
-	        	column1.get(i).setStyle("-fx-background-color: #b8e6bf");
+	        	column1.get(i).setTextFill(Color.BLACK);
+	        	column1.get(i).setStyle("-fx-background-color: #a0c1b9");
 			    column1.get(i).setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-	        	column1.get(i).setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    }
 	        
 	        ones1.setOnMouseClicked(e -> {
@@ -1209,12 +1175,11 @@ public class App extends Application{
 	        column2.add(total2);
 	        
 	        for (int i = 0; i < column2.size(); i++) {
-	        	column2.get(i).setPrefSize(90, 25);
+	        	column2.get(i).setPrefSize(95, 25);
 	        	column2.get(i).setAlignment(Pos.CENTER);
-	        	column2.get(i).setTextFill(Color.DARKBLUE);
-	        	column2.get(i).setStyle("-fx-background-color: #b8e6bf");
+	        	column2.get(i).setTextFill(Color.BLACK);
+	        	column2.get(i).setStyle("-fx-background-color: #a0c1b9");
 			    column2.get(i).setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-	        	column2.get(i).setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 		    }
 	        
 		    for (int i = 0; i < scores.size(); i++)
@@ -1359,13 +1324,12 @@ public class App extends Application{
 				}
 			});
 			
-			rollButton = new Button("Roll");
+			rollButton = new Button("ROLL");
 			rollButton.setTextFill(Color.BLACK);
-			rollButton.setStyle("-fx-background-color: #EE2C2C");
+			rollButton.setStyle("-fx-background-color: #85b093");
 			rollButton.setPrefHeight(50);
 			rollButton.setPrefWidth(50);
 			rollButton.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
-			rollButton.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 			
 			rollButton.setOnAction (e -> {
 				if (enemyTurn || !oponentConnected)
@@ -1481,13 +1445,13 @@ public class App extends Application{
 			
 			HBox d = new HBox(15);
 			d.getChildren().addAll(rollButton, diceImage1, diceImage2, diceImage3, diceImage4, diceImage5);
-			d.setStyle("-fx-background-color: #A7C7E7");
+			d.setStyle("-fx-background-color: #094152"); 
 			Insets insets = new Insets(10,10,10,10);
 			d.setPadding(insets);
 			
 			root = new VBox(15);
 			root.getChildren().addAll(t,d);
-			root.setStyle("-fx-background-color: #A7C7E7");
+			root.setStyle("-fx-background-color: #094152");  
 			
 			
 		         } catch(Exception e5) {
@@ -1495,7 +1459,7 @@ public class App extends Application{
 		}
 	    	return root;    	
 	}
-
+	
 	private VBox getRules() throws IOException {
 		Label l=new Label("\n YAHTZEE RULES \n\n");
 		//l.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY )));
@@ -1510,9 +1474,6 @@ public class App extends Application{
 	    t.setFont(Font.font("Ariel", FontWeight.BOLD, 12));
 	    t.setMinHeight(450);
 	   
-	   
-	    
-	    
 		try {
 			BufferedReader br=new BufferedReader(new FileReader("src/addings/rules.txt"));
 			StringBuilder sb= new StringBuilder();
@@ -1530,8 +1491,6 @@ public class App extends Application{
 			e.printStackTrace();
 		}
 		
-		
-		
 		VBox r=new VBox();
 		r.getChildren().addAll(l,t);
 		r.setAlignment(Pos.CENTER);
@@ -1539,13 +1498,9 @@ public class App extends Application{
 		return r;
 	}
 	
-
-
-
-	
 	 private VBox makeChat() {
-	    	Label label=new Label("Chat: ");
-	    	label.setTextFill(Color.BLACK );
+	    	Label label=new Label("CHAT: ");
+	    	label.setTextFill(Color.WHITE );
 			label.setTextAlignment(TextAlignment.JUSTIFY);
 			label.setAlignment(Pos.TOP_CENTER);
 			label.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
@@ -1553,26 +1508,45 @@ public class App extends Application{
 	    	chat=new TextFlow();
 	    	chat.setPrefWidth(180);
 	    	chat.setPrefHeight(330);
-	    	chat.setStyle("-fx-background-color: #336699; -fx-text-box-border: transparent;");
+	    	
+	    	chat.setStyle("-fx-background-color: #326d6c; -fx-text-box-border: transparent;  -fx-text-fill: #ffffff; -fx-font-weight: bold");
 	    	chat.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 	    	chat.setPadding(new Insets(10));
 	        
 	    	
 	    	TextField input =new TextField();
+			input.setStyle("-fx-background-color: #326d6c;  -fx-text-fill: #ffffff; -fx-font-weight: bold");
 	    	input.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
+	    	
 	    	Button send= new Button("SEND");
+	    	send.setTextFill(Color.BLACK);
+			send.setStyle("-fx-background-color: #85b093");
 	    	send.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 	    	
 	    	HBox toSend=new HBox(10);
 	    	toSend.setAlignment(Pos.BASELINE_RIGHT);
 	    	toSend.getChildren().addAll(input,send);
 	    	
+	    	turn = new Label();
+	    	turn.setPrefSize(155, 25);
+	    	if (!enemyTurn && oponentConnected)
+				 turn.setStyle("-fx-background-color: #008000");
+			 else
+				 turn.setStyle("-fx-background-color: #ff0000");
+	    	
 	    	Button leave= new Button("LEAVE");
+	    	leave.setTextFill(Color.BLACK);
+			leave.setStyle("-fx-background-color: #85b093");
 	    	leave.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
+	    	
+	    	HBox h = new HBox(10);
+	    	h.getChildren().addAll(turn, leave);
+	    	Insets insets = new Insets (10, 0, 0, 0);
+	    	h.setPadding(insets);
 	   
 	    	
 	    	VBox chatBox=new VBox(10);
-	    	chatBox.getChildren().addAll(leave, label, chat, toSend);
+	    	chatBox.getChildren().addAll(h, label, chat, toSend);
 	    	
 	    	return chatBox;
 	    }
@@ -1586,21 +1560,22 @@ public class App extends Application{
 	    	}
 	    }
 	 
-	 public void refresh() {  
-		 
-		}
-	 
-	 public void reset() {  
-			Platform.runLater(new Runnable() {
+	 public void refresh() { 
+		 Platform.runLater(new Runnable() { 
 				@Override
 				public void run() {
+					if (oponentConnected)
+						players.get(1).setText(oponentsName);
 					
-					refresh();
+					if (!enemyTurn && oponentConnected &&!end)
+						 turn.setStyle("-fx-background-color: #008000");
+					else
+						 turn.setStyle("-fx-background-color: #ff0000");
 				}
-			});
+				});
 		}
 	 
-	 public void select(String select) {
+	 public void select(String select) {  
 		    enemyTurn = false;
 		    String[] scores = select.split(" ");
 			for (int i = 0; i < column2.size(); i++)

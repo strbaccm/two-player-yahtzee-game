@@ -488,7 +488,7 @@ public class App extends Application{
 	        				message += "x";
 	        			message += " ";
 	        		}
-	        		message = message.substring(0, message.length() - 2);
+	        		message = message.substring(0, message.length() - 1);
 	        		client.sendSelect(message);
 	        		
 	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
@@ -555,7 +555,7 @@ public class App extends Application{
 	        				message += "x";
 	        			message += " ";
 	        		}
-	        		message = message.substring(0, message.length() - 2);
+	        		message = message.substring(0, message.length() - 1);
 	        		client.sendSelect(message);
 	        		
 	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
@@ -622,7 +622,7 @@ public class App extends Application{
 	        				message += "x";
 	        			message += " ";
 	        		}
-	        		message = message.substring(0, message.length() - 2);
+	        		message = message.substring(0, message.length() - 1);
 	        		client.sendSelect(message);
 	        		
 	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
@@ -689,7 +689,7 @@ public class App extends Application{
 	        				message += "x";
 	        			message += " ";
 	        		}
-	        		message = message.substring(0, message.length() - 2);
+	        		message = message.substring(0, message.length() - 1);
 	        		client.sendSelect(message);
 	        		
 	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
@@ -756,7 +756,7 @@ public class App extends Application{
 	        				message += "x";
 	        			message += " ";
 	        		}
-	        		message = message.substring(0, message.length() - 2);
+	        		message = message.substring(0, message.length() - 1);
 	        		client.sendSelect(message);
 	        		
 	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
@@ -814,7 +814,7 @@ public class App extends Application{
 	        				message += "x";
 	        			message += " ";
 	        		}
-	        		message = message.substring(0, message.length() - 2);
+	        		message = message.substring(0, message.length() - 1);
 	        		client.sendSelect(message);
 	        		
 	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
@@ -872,7 +872,7 @@ public class App extends Application{
 	        				message += "x";
 	        			message += " ";
 	        		}
-	        		message = message.substring(0, message.length() - 2);
+	        		message = message.substring(0, message.length() - 1);
 	        		client.sendSelect(message);
 	        		
 	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
@@ -930,7 +930,7 @@ public class App extends Application{
 	        				message += "x";
 	        			message += " ";
 	        		}
-	        		message = message.substring(0, message.length() - 2);
+	        		message = message.substring(0, message.length() - 1);
 	        		client.sendSelect(message);
 	        		
 	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
@@ -988,7 +988,7 @@ public class App extends Application{
 	        				message += "x";
 	        			message += " ";
 	        		}
-	        		message = message.substring(0, message.length() - 2);
+	        		message = message.substring(0, message.length() - 1);
 	        		client.sendSelect(message);
 	        		
 	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
@@ -1046,7 +1046,7 @@ public class App extends Application{
 	        				message += "x";
 	        			message += " ";
 	        		}
-	        		message = message.substring(0, message.length() - 2);
+	        		message = message.substring(0, message.length() - 1);
 	        		client.sendSelect(message);
 	        		
 	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
@@ -1104,7 +1104,7 @@ public class App extends Application{
 	        				message += "x";
 	        			message += " ";
 	        		}
-	        		message = message.substring(0, message.length() - 2);
+	        		message = message.substring(0, message.length() - 1);
 	        		client.sendSelect(message);
 	        		
 	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {
@@ -1162,7 +1162,7 @@ public class App extends Application{
 	        				message += "x";
 	        			message += " ";
 	        		}
-	        		message = message.substring(0, message.length() - 2);
+	        		message = message.substring(0, message.length() - 1);
 	        		client.sendSelect(message);
 	        		
 	        		if (!column1.get(column1.size() - 1).getText().equals("") && !column2.get(column2.size() - 1).getText().equals("")) {

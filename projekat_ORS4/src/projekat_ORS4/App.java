@@ -2,11 +2,9 @@ package projekat_ORS4;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -80,48 +78,57 @@ public class App extends Application{
 			client.start();
 			this.stage=stage;
 			
+			File file = new File("src/addings/picture.jpg");
+			ImageView picture = new ImageView();
+			picture.setImage(new Image(file.toURI().toString()));
+			picture.setFitHeight(600);
+	        picture.setFitWidth(300);
+	        
+	        HBox p = new HBox(15);
+	        p.setMinSize(300, 600);
+	        p.getChildren().addAll(picture);
+			
 			Group start=new Group();
+			
 			Button rules = new Button("RULES");
+			rules.setTextFill(Color.BLACK);
+			rules.setStyle("-fx-background-color: #85b093");
 			rules.setMaxSize(100, 20);
-			rules.setLayoutX(20);
-			rules.setLayoutY(30);
+			rules.setLayoutX(30);
+			rules.setLayoutY(120);
 			rules.setFont(Font.font("Ariel",FontWeight.BOLD, 13));
 			
 			
 			Button leave = new Button("LEAVE");
+			leave.setTextFill(Color.BLACK);
+			leave.setStyle("-fx-background-color: #85b093");
 			leave.setMaxSize(100,20);
-			leave.setLayoutX(520);
-			leave.setLayoutY(30);
+			leave.setLayoutX(230);
+			leave.setLayoutY(120);
 			leave.setFont(Font.font("Ariel",FontWeight.BOLD, 13));
-			
-			InputStream stream =new FileInputStream("src/addings/yahtzee.jpg");
-			Image image=new Image(stream);
-			ImageView iv=new ImageView();
-			iv.setImage(image);
-			iv.setX(0);
-			iv.setY(0);
-			iv.setFitWidth(600);
-			iv.setPreserveRatio(true);
 			
 			
 			Label label1= new Label("ENTER USERNAME:");
-			label1.setLayoutX(250);
+			label1.setLayoutX(100);
 			label1.setLayoutY(340);
-			label1.setTextFill(Color.rgb(0, 0, 0));
+			label1.setTextFill(Color.rgb(255, 255, 255));
 			label1.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 			
 			TextField userName = new TextField();
 			userName.setMaxWidth(260);
 			userName.setMaxHeight(40);
-			userName.setLayoutX(230);
+			userName.setLayoutX(85);
 			userName.setLayoutY(370);
-			//userName.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
+			userName.setStyle("-fx-background-color: #326d6c;  -fx-text-fill: #ffffff; -fx-font-weight: bold");
+			userName.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 			
 		
 			Button play = new Button(" PLAY ");
+			play.setTextFill(Color.BLACK);
+			play.setStyle("-fx-background-color: #85b093");
 			play.setMaxWidth(250);
 			play.setMinHeight(30);
-			play.setLayoutX(270);
+			play.setLayoutX(130);
 			play.setLayoutY(410);
 			play.setFont(Font.font("Ariel",FontWeight.BOLD, 13));
 			
@@ -129,12 +136,16 @@ public class App extends Application{
 			error.setTextFill(Color.rgb(255, 0, 0));
 			error.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 			error.setVisible(false);
-			error.setLayoutX(245);
+			error.setLayoutX(100);
 			error.setLayoutY(460);
 			
-			start.getChildren().addAll(iv,rules, leave, label1, userName, play,error);
+			start.getChildren().addAll(rules, leave, label1, userName, play, error);
 			
-			Scene scene = new Scene(start,600,600);
+			HBox root = new HBox(15);
+			root.getChildren().addAll(p, start);
+			root.setStyle("-fx-background-color: #094152");
+			
+			Scene scene = new Scene(root,600,600);
 			stage.setScene(scene);
 			stage.setTitle("YAHTZEE"); 
 			stage.setResizable(false);
@@ -171,11 +182,16 @@ public class App extends Application{
 					rule = getRules();
 					Button back= new Button("BACK");
 					back.setAlignment(Pos.BOTTOM_LEFT);
+					back.setTextFill(Color.BLACK);
+					back.setStyle("-fx-background-color: #85b093");
 					back.setFont(Font.font("Ariel",FontWeight.BOLD, 12));
 					
 					VBox b=new VBox();
 					b.getChildren().addAll(rule,back);
-					b.setStyle("-fx-background-color: #A7C7E7; -fx-text-box-border: transparent;");
+					b.setStyle("-fx-background-color: #094152; -fx-text-box-border: transparent;");
+					Insets insets = new Insets(10, 10, 10, 10);
+					b.setPadding(insets);
+					
 					Scene scene3 =new Scene(b, 600,600);
 					stage.setScene(scene3);
 					stage.show();
@@ -192,7 +208,7 @@ public class App extends Application{
 			
 		} catch(Exception e) {
 			e.printStackTrace();
-		}
+		}	
 	}
 
 	public  VBox getGame() {
@@ -1464,13 +1480,14 @@ public class App extends Application{
 		Label l=new Label("\n YAHTZEE RULES \n\n");
 		//l.setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY )));
 		l.setFont(Font.font("Ariel", FontWeight.BOLD, 15));
-		l.setTextFill(Color.BLACK );
+		l.setTextFill(Color.WHITE);
 		l.setTextAlignment(TextAlignment.JUSTIFY);
 		l.setAlignment(Pos.TOP_CENTER);
 		//r.setTextFill(Color.RED);
 	
 		TextArea t=new TextArea();
 		t.setEditable(false);
+		t.setStyle("-fx-control-inner-background: #326d6c; -fx-text-box-border: transparent; -fx-text-fill: #ffffff; -fx-font-weight: bold");
 	    t.setFont(Font.font("Ariel", FontWeight.BOLD, 12));
 	    t.setMinHeight(450);
 	   
@@ -1494,6 +1511,8 @@ public class App extends Application{
 		VBox r=new VBox();
 		r.getChildren().addAll(l,t);
 		r.setAlignment(Pos.CENTER);
+		Insets insets = new Insets(10, 10, 10, 10);
+		r.setPadding(insets);
 		//r.setStyle("-fx-background-color: #4B5795; -fx-text-box-border: transparent;");
 		return r;
 	}

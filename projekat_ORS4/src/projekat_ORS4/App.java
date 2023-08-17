@@ -1608,6 +1608,7 @@ public class App extends Application{
 					enemyTurn = false;
 					end = false;
                                         oponentsName = "";
+					client.sendUsername();
 					
 					VBox cet=makeChat();
 					VBox desno=getGame();

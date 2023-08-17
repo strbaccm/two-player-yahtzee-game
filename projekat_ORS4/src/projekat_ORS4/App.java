@@ -1589,6 +1589,13 @@ public class App extends Application{
 						 turn.setStyle("-fx-background-color: #008000");
 					else
 						 turn.setStyle("-fx-background-color: #ff0000");
+
+					if(end) {
+						VBox winner = getWinner(Integer.parseInt(column1.get(column1.size() - 1).getText()),Integer.parseInt(column2.get(column2.size() - 1).getText()));
+						Scene scene4 = new Scene(winner,600,600);
+						stage.setScene(scene4);
+						stage.show();
+					}
 				}
 				});
 		}
@@ -1652,6 +1659,84 @@ public class App extends Application{
 			client.sendDisconnected();
 			client.closeResourses();
 		}
+	
+	public VBox getWinner(int total1, int total2) {
+		 VBox winner = new VBox();
+		 winner.setStyle("-fx-background-color: #094152");
+		 
+	    Label l=new Label("\n FINAL SCORE \n\n");		
+		l.setFont(Font.font("Ariel", FontWeight.BOLD, 15));
+		l.setTextFill(Color.BLACK);
+		l.setTextAlignment(TextAlignment.JUSTIFY);
+		l.setAlignment(Pos.TOP_CENTER);
+			
+		 Label score;
+		 
+		 if(total1 > total2) {
+			 String info= "The WINNER is " + username+ "!" + "\\n" +
+		 "1." + username + ":" + total1 + "\\n" +
+		 "2." + oponentsName + ":" + total2;
+			 score = new Label(info);
+			 score.setMaxSize(400, 300);
+			 score.setFont(Font.font("Ariel", FontWeight.BOLD, 18));
+			 score.setTextFill(Color.BLACK);
+			 score.setStyle("-fx-background-color: #326d6c");
+		 }
+		 else if( total1 < total2 ) {
+			 String info= "The WINNER is " + oponentsName + "!" + "\\n" +
+					 "1." + oponentsName + ":" + total2 + "\\n" +
+					 "2." + username + ":" + total1;
+			 score = new Label(info);
+			 score.setMaxSize(400, 300);
+			 score.setTextFill(Color.BLACK);
+			 score.setFont(Font.font("Ariel", FontWeight.BOLD, 18));
+			 score.setStyle("-fx-background-color: #326d6c");
+			 
+		 }
+		 else {
+			 String info= "There is NO winner. Do you want to play again?";
+			 score = new Label(info);
+			 score.setMaxSize(400, 200);
+			 score.setFont(Font.font("Ariel", FontWeight.BOLD, 18));
+			 score.setTextFill(Color.BLACK);
+			 score.setStyle("-fx-background-color: #326d6c");
+			 
+		 }
+		 
+		 HBox buttons = new HBox();
+		 
+		 Button leaveGame = new Button("LEAVE GAME");
+		 leaveGame.setMaxSize(150, 20);
+		 leaveGame.setTextFill(Color.BLACK);
+		 leaveGame.setStyle("-fx-background-color: #85b093");
+		 leaveGame.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
+		 leaveGame.setOnMouseClicked(e -> {
+		    client.sendLeftGame();
+			oponentConnected = false;
+			end = false;
+			oponentsName = "";
+			Platform.exit();
+			
+				
+			 
+		 });
+		 
+		 
+		 Button playAgain = new Button("PLAY AGAIN");
+		 playAgain.setMaxSize(150, 20);
+		 playAgain.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
+		 playAgain.setTextFill(Color.BLACK);
+		 playAgain.setStyle("-fx-background-color: #85b093");
+		 playAgain.setOnMouseClicked(e -> {
+			 reset();
+		 });
+		
+		 buttons.getChildren().addAll(leaveGame,playAgain);
+		 winner.getChildren().addAll(l,score, buttons);
+		 
+		return winner;
+		
+	 }
 	
 	 public static void main(String[] args) {
 		    launch(args);

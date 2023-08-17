@@ -30,12 +30,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 public class App extends Application{
 	private Stage stage;
@@ -174,6 +177,36 @@ public class App extends Application{
 				stage.setScene(scene2);
 				stage.show();
 				
+			});
+			userName.setOnAction(new EventHandler<ActionEvent>(){
+				
+				public void handle(ActionEvent action){
+					if(userName.getText().isEmpty()) {
+						error.setVisible(true);
+						return;
+					}
+					error.setText("");
+					username = userName.getText();
+					client.setUsername(userName.getText());
+					client.sendUsername();
+					
+					VBox cet=makeChat();
+					VBox desno=getGame();
+					desno.setStyle("-fx-background-color: #094152");
+					HBox c=new HBox();
+				     
+					c.getChildren().addAll(desno,cet);
+					c.setStyle("-fx-background-color: #094152; -fx-text-box-border: transparent;");
+					Scene scene2 =new Scene(c,630,630);
+					stage.setScene(scene2);
+					stage.show();
+				}
+			});
+			leave.setOnAction(new EventHandler<ActionEvent>() {
+				
+				public void handle(ActionEvent action) {
+					stage.close();
+				}
 			});
 			
 			rules.setOnAction(e->{
@@ -1525,21 +1558,63 @@ public class App extends Application{
 			label.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 	    	
 	    	chat=new TextFlow();
-	    	chat.setPrefWidth(180);
+	    	chat.setPrefWidth(217);
 	    	chat.setPrefHeight(330);
 	    	chat.setStyle("-fx-background-color: #326d6c; -fx-text-box-border: transparent;  -fx-text-fill: #ffffff; -fx-font-weight: bold");
 	    	chat.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 	    	chat.setPadding(new Insets(10));
-	        
+	    	ScrollPane scrollPane=new ScrollPane();
+	        scrollPane.setContent(chat);
+	        scrollPane.setMaxWidth(217);
+	    	scrollPane.setPrefHeight(330);
+	    	scrollPane.setStyle("-fx-control-inner-background: #326d6c; -fx-text-box-border: transparent; -fx-text-fill: #ffffff; -fx-font-weight: bold");
 	    	
+	 
 	    	TextField input =new TextField();
 			input.setStyle("-fx-background-color: #326d6c;  -fx-text-fill: #ffffff; -fx-font-weight: bold");
 	    	input.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
+	    	
+            input.setOnAction(new EventHandler<ActionEvent> () {
+	    		
+	    		public void handle(ActionEvent action) {
+	    			if(oponentConnected)
+	    			client.sendMessage(input.getText());
+	    			
+	    			if(!input.getText().isEmpty()) {
+	    				Text name=new Text(client.getUsername() + ": ");
+	    				Paint green=Color.rgb(0,255,0);
+	    				name.setFill(green);
+	    				Text textMessage = new Text(input.getText() + "\n" );
+	    				ObservableList<Node> list= chat.getChildren();
+	    				list.addAll(name, textMessage);
+	    				input.clear();
+	    			}
+	                  	
+	    		}
+	    	});
 	    	
 	    	Button send= new Button("SEND");
 	    	send.setTextFill(Color.BLACK);
 			send.setStyle("-fx-background-color: #85b093");
 	    	send.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
+	    	
+            send.setOnAction(e ->{
+	    		
+	    		if(oponentConnected)
+	    			client.sendMessage(input.getText());
+	    			
+	    			if(!input.getText().isEmpty()) {
+	    				Text name=new Text(client.getUsername() + ": ");
+	    				Paint green=Color.rgb(0,255,0);
+	    				name.setFill(green);
+	    				Text textMessage = new Text(input.getText() + "\n" );
+	    				ObservableList<Node> list= chat.getChildren();
+	    				list.addAll(name, textMessage);
+	    				input.clear();
+	    			}
+	    		
+	    	}
+	    	);
 	    	
 	    	HBox toSend=new HBox(10);
 	    	toSend.setAlignment(Pos.BASELINE_RIGHT);
@@ -1557,6 +1632,18 @@ public class App extends Application{
 			leave.setStyle("-fx-background-color: #85b093");
 	    	leave.setFont(Font.font("Ariel", FontWeight.BOLD, 13));
 	    	
+            leave.setOnAction(new EventHandler<ActionEvent>() {
+				
+				public void handle(ActionEvent action) {
+					client.sendLeftGame();
+					oponentConnected=false;
+					end=false;
+					oponentsName="";
+					stage.close();
+				}
+			});
+	    	
+	    	
 	    	HBox h = new HBox(10);
 	    	h.getChildren().addAll(turn, leave);
 	    	Insets insets = new Insets (10, 0, 0, 0);
@@ -1564,14 +1651,14 @@ public class App extends Application{
 	   
 	    	
 	    	VBox chatBox=new VBox(10);
-	    	chatBox.getChildren().addAll(h, label, chat, toSend);
+	    	chatBox.getChildren().addAll(h, label, scrollPane, toSend);
 	    	
 	    	return chatBox;
 	    }
-	 
-	 public void addMessageToChat(String message) {            //*****
+	 public void addMessageToChat(String message) {            
 	    	if(message.split(":").length >=2) {
 	    		Text name=new Text(oponentsName+":");
+			name.setFill(Color.RED);
 	    		Text messageText=new Text(message.split(":")[1]+ "\n");
 	    		ObservableList<Node> list = chat.getChildren();
 	    	    list.addAll(name, messageText);

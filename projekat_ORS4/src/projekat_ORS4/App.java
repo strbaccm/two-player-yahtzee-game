@@ -1592,6 +1592,26 @@ public class App extends Application{
 				}
 				});
 		}
+
+	public void reset() {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					VBox cet=makeChat();
+					VBox desno=getGame();
+					desno.setStyle("-fx-background-color: #094152");
+					HBox c=new HBox();
+				     
+					c.getChildren().addAll(desno,cet);
+					c.setStyle("-fx-background-color: #094152; -fx-text-box-border: transparent;");
+					Scene scene2 =new Scene(c,630,630);
+					stage.setScene(scene2);
+					stage.show();
+					
+					refresh();
+				}
+			});
+		}
 	 
 	 public void select(String select) {  
 		    enemyTurn = false;

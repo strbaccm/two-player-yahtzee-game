@@ -1752,7 +1752,7 @@ public class App extends Application{
 		 VBox oponent = new VBox(10);
 		 oponent.setStyle("-fx-background-color: #094152");
 		 
-	    Label l=new Label("\n Oponent " + oponentsName + " disconnected! \n\n");		
+	    Label l=new Label("\n Oponent " + oponentsName + " has left the game! \n\n");		
 		l.setFont(Font.font("Ariel", FontWeight.BOLD, 15));
 		l.setTextFill(Color.WHITE);
 		l.setTextAlignment(TextAlignment.JUSTIFY);

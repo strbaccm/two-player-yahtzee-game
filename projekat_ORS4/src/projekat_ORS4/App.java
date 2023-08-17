@@ -1585,7 +1585,7 @@ public class App extends Application{
 					if (oponentConnected)
 						players.get(1).setText(oponentsName);
 					
-					if (!enemyTurn && oponentConnected &&!end)
+					if (!enemyTurn && oponentConnected && !end)
 						 turn.setStyle("-fx-background-color: #008000");
 					else
 						 turn.setStyle("-fx-background-color: #ff0000");

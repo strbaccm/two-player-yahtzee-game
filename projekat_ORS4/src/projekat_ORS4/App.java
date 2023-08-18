@@ -1,4 +1,4 @@
-package projekat_ORS4;
+package application;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -1565,16 +1565,17 @@ public class App extends Application{
 	    	chat.setStyle("-fx-background-color: #326d6c; -fx-text-box-border: transparent;  -fx-text-fill: #ffffff; -fx-font-weight: bold");
 	    	chat.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
 	    	chat.setPadding(new Insets(10));
+	    	
 	    	ScrollPane scrollPane=new ScrollPane();
 	        scrollPane.setContent(chat);
-	        scrollPane.setMaxWidth(217);
-	    	scrollPane.setPrefHeight(330);
-	    	scrollPane.setStyle("-fx-control-inner-background: #326d6c; -fx-text-box-border: transparent; -fx-text-fill: #ffffff; -fx-font-weight: bold");
-	    	
+	        scrollPane.setFitToWidth(true);
+	        scrollPane.vvalueProperty().bind(chat.heightProperty());
+	   
 	 
 	    	TextField input =new TextField();
 			input.setStyle("-fx-background-color: #326d6c;  -fx-text-fill: #ffffff; -fx-font-weight: bold");
 	    	input.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,null,null)));
+	    	
 	    	
             input.setOnAction(new EventHandler<ActionEvent> () {
 	    		
@@ -1587,6 +1588,8 @@ public class App extends Application{
 	    				Paint green=Color.rgb(0,255,0);
 	    				name.setFill(green);
 	    				Text textMessage = new Text(input.getText() + "\n" );
+	    				Paint white=Color.rgb(255,255,255);
+	    				textMessage.setFill(white);
 	    				ObservableList<Node> list= chat.getChildren();
 	    				list.addAll(name, textMessage);
 	    				input.clear();
@@ -1610,6 +1613,8 @@ public class App extends Application{
 	    				Paint green=Color.rgb(0,255,0);
 	    				name.setFill(green);
 	    				Text textMessage = new Text(input.getText() + "\n" );
+	    				Paint white=Color.rgb(255,255,255);
+	    				textMessage.setFill(white);
 	    				ObservableList<Node> list= chat.getChildren();
 	    				list.addAll(name, textMessage);
 	    				input.clear();
@@ -1625,7 +1630,7 @@ public class App extends Application{
 	    	turn = new Label();
 	    	turn.setPrefSize(155, 25);
 	    	if (!enemyTurn && oponentConnected)
-				 turn.setStyle("-fx-background-color: #008000");
+				 turn.setStyle("-fx-background-color: #00fa00");
 			 else
 				 turn.setStyle("-fx-background-color: #ff0000");
 	    	
@@ -1660,8 +1665,11 @@ public class App extends Application{
 	 public void addMessageToChat(String message) {            
 	    	if(message.split(":").length >=2) {
 	    		Text name=new Text(oponentsName+":");
-			name.setFill(Color.RED);
+	    		Paint red=Color.rgb(255,0,0);
+				name.setFill(red);
 	    		Text messageText=new Text(message.split(":")[1]+ "\n");
+	    		Paint white=Color.rgb(255,255,255);
+				messageText.setFill(white);
 	    		ObservableList<Node> list = chat.getChildren();
 	    	    list.addAll(name, messageText);
 	    	}
@@ -1675,7 +1683,7 @@ public class App extends Application{
 						players.get(1).setText(oponentsName);
 					
 					if (!enemyTurn && oponentConnected && !end)
-						 turn.setStyle("-fx-background-color: #008000");
+						 turn.setStyle("-fx-background-color: #00fa00");
 					else
 						 turn.setStyle("-fx-background-color: #ff0000");
 					
